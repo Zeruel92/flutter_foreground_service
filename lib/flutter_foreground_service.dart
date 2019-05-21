@@ -11,7 +11,7 @@ class FlutterForegroundService {
   static const MethodChannel _channel =
       const MethodChannel('flutter_foreground_service');
 
-  static void init() {
+  static Future<bool> init() async {
     _backgroundchannel.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'trigger') {
         WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +22,7 @@ class FlutterForegroundService {
         closure();
       }
     });
+    return true;
   }
 
   static Future<String> start(
