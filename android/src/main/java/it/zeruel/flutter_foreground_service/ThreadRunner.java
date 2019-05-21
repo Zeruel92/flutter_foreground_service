@@ -3,6 +3,7 @@ package it.zeruel.flutter_foreground_service;
 import android.content.Context;
 import java.util.Map;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.FlutterCallbackInformation;
 import io.flutter.view.FlutterMain;
 import io.flutter.view.FlutterNativeView;
@@ -15,14 +16,16 @@ public class ThreadRunner implements Runnable {
     private Context context;
     private boolean running;
     private int timeout;
+    private PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
 
-    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout){
+    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback){
         this.t = new Thread(this);
         this.arg = arg;
         this.context = ctx;
         running = true;
         this.timeout = timeout;
         this.t.start();
+        this.pluginRegistrantCallback = pluginRegistrantCallback;
     }
 
     public void stop(){
@@ -51,6 +54,7 @@ public class ThreadRunner implements Runnable {
                         "flutter_foreground_service_background");
 
                 sBackgroundFlutterView.runFromBundle(args);
+                this.pluginRegistrantCallback.registerWith(sBackgroundFlutterView.getPluginRegistry());
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
