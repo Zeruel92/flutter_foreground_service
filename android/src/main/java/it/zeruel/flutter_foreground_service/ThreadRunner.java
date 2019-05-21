@@ -14,9 +14,9 @@ public class ThreadRunner implements Runnable {
     private Map<String, Long> arg;
     private Context context;
     private boolean running;
-    private long timeout;
+    private int timeout;
 
-    public ThreadRunner(Context ctx, Map<String, Long> arg, long timeout){
+    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout){
         this.t = new Thread(this);
         this.arg = arg;
         this.context = ctx;
