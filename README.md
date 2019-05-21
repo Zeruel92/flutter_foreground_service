@@ -12,7 +12,8 @@ add in pubspec.yaml
     flutter_foreground_service:
         git:
             url: https://github.com/pspgt/flutter_foreground_service.git
-            ref: master```
+            ref: master
+```
 
 ## Setup
 
@@ -22,7 +23,7 @@ In order to use this plugin add to your android manifest
 
 and
 
-```<service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service>```
+``` <service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service> ```
 
 ## Using
 ### Starting a foreground service
@@ -32,10 +33,13 @@ FlutterForegroundService.start(
                     text: 'Testo Notifica',
                     subText: 'Sottotesto',
                     ticker: 'Accessibilità',
-                    callback: backgroundtask) ```
+                    callback: backgroundtask)
+```
 
 backgroundtask must be a global void function
 
 ### Stopping a foreground service
 
-```FlutterForegroundService.stop()```
+```
+FlutterForegroundService.stop()
+```
