@@ -7,8 +7,10 @@ import 'package:http/http.dart' as http;
 void main() => runApp(MyApp());
 
 //void backgroundtask() => print('${DateTime.now()}');
-void backgroundtask() => http.post('http://192.168.1.215:8080',
-    body: json.encode({"data": "${DateTime.now()}", "telefono": "p10lite"}));
+void backgroundtask() =>
+    http.post('http://10.0.208.240:8080',
+        body: json.encode(
+            {"data": "${DateTime.now()}", "telefono": "emulatore"}));
 
 class MyApp extends StatefulWidget {
   @override
@@ -36,9 +38,9 @@ class _MyAppState extends State<MyApp> {
                 child: Text('Avvia'),
                 onPressed: () => FlutterForegroundService.start(
                     title: 'Titolo',
-                    text: 'Prova',
-                    subText: 'Scanning in backostia',
-                    ticker: 'aa',
+                    text: 'Testo Notifica',
+                    subText: 'Sottotesto',
+                    ticker: 'Accessibilità',
                     callback: backgroundtask),
               ),
               RaisedButton(

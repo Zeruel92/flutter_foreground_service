@@ -1,44 +1,27 @@
 package it.zeruel.flutter_foreground_service;
 
-import android.app.Application;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.view.FlutterCallbackInformation;
-import io.flutter.view.FlutterMain;
-import io.flutter.view.FlutterNativeView;
-import io.flutter.view.FlutterRunArguments;
 
 public class ForegroundService extends Service  {
-
-//    public ForegroundService(Context context){
-//        this.context=context;
-//    }
-
-
 
     private static final int ONGOING_NOTIFICATION_ID = 1;
     private String CHANNEL_ID = "flutter_foreground_service_channel_id";
     private ThreadRunner t;
-//    private Context context;
 
     private void createNotificationChannel() {
 
@@ -89,29 +72,11 @@ public class ForegroundService extends Service  {
             final Map<String, Long> arg = new HashMap<String,Long>();
             arg.put("handle",handle);
 
-            FlutterNativeView sBackgroundFlutterView = new FlutterNativeView(getApplicationContext(), true);
-            FlutterRunArguments args = new FlutterRunArguments();
-            FlutterCallbackInformation callbackInfo = FlutterCallbackInformation.
-                    lookupCallbackInformation(handle);
-            args.bundlePath = FlutterMain.findAppBundlePath(getApplicationContext());
-            args.entrypoint = callbackInfo.callbackName;
-            args.libraryPath = callbackInfo.callbackLibraryPath;
-            sBackgroundFlutterView.runFromBundle(args);
-            final MethodChannel mBackgroundChannel = new MethodChannel(sBackgroundFlutterView,
-                   "flutter_foreground_service_background");
-           // mBackgroundChannel.setMethodCallHandler();
-           t = new ThreadRunner(arg,mBackgroundChannel);
-//            Handler handler = new Handler();
-//            while(true) {
-//                handler.postDelayed(new Runnable() {
-//                    public void run() {
-//                        mBackgroundChannel.invokeMethod("trigger", arg);
-//                    }
-//                }, 5000);
-//            }
+           t = new ThreadRunner(getApplicationContext(),arg);
+
         }
         else{
-            //t.stop();
+            t.stop();
             stopSelf();
             stopForeground(true);
         }

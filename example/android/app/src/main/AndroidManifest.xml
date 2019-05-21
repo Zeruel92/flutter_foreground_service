@@ -31,4 +31,5 @@
         </activity>
         <service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service>
     </application>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"></uses-permission>
 </manifest>
