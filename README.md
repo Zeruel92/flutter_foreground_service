@@ -14,6 +14,11 @@ add in pubspec.yaml
             url: https://github.com/pspgt/flutter_foreground_service.git
             ref: master
 ```
+and import
+
+```
+import 'package:flutter_foreground_service/flutter_foreground_service.dart';
+```
 
 ## Setup
 
