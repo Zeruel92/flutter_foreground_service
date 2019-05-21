@@ -26,7 +26,16 @@ and
 ``` <service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service> ```
 
 ## Using
+Before starting a service FlutterForegroundServicePlugin must be initialized via
+
+```
+FlutterForegroundService.init();
+```
+
+in your initState function
+
 ### Starting a foreground service
+
 ```
 FlutterForegroundService.start(
                     title: 'Titolo',
