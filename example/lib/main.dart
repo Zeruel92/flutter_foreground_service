@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_service/flutter_foreground_service.dart';
-import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
-//void backgroundtask() => print('${DateTime.now()}');
-void backgroundtask() =>
-    http.post('http://10.0.208.240:8080',
-        body: json.encode(
-            {"data": "${DateTime.now()}", "telefono": "emulatore"}));
+
+void backgroundtask() => print('This run in background ${DateTime.now()}');
+
 
 class MyApp extends StatefulWidget {
   @override
@@ -41,7 +36,9 @@ class _MyAppState extends State<MyApp> {
                     text: 'Testo Notifica',
                     subText: 'Sottotesto',
                     ticker: 'Accessibilità',
-                    callback: backgroundtask),
+                    callback: backgroundtask,
+                    seconds: 30
+                ),
               ),
               RaisedButton(
                 child: Text('Stop'),

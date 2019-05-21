@@ -39,6 +39,7 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler {
         intent.putExtra("subText", (String)call.argument("subText"));
         intent.putExtra("ticker", (String)call.argument("ticker"));
         intent.putExtra("handle", (long) call.argument("callback"));
+        intent.putExtra("timeout",((long) call.argument("timeout"))*1000);
         context.startService(intent);
         result.success(null);
         break;

@@ -47,7 +47,9 @@ FlutterForegroundService.start(
                     text: 'Testo Notifica',
                     subText: 'Sottotesto',
                     ticker: 'Accessibilità',
-                    callback: backgroundtask)
+                    callback: backgroundtask,
+                    seconds: 30
+                    )
 ```
 
 backgroundtask must be a global void function

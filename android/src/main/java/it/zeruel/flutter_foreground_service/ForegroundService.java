@@ -71,8 +71,9 @@ public class ForegroundService extends Service  {
             startForeground(ONGOING_NOTIFICATION_ID, notification);
             final Map<String, Long> arg = new HashMap<String,Long>();
             arg.put("handle",handle);
+            long timeout = bundle.getLong("timeout");
 
-           t = new ThreadRunner(getApplicationContext(),arg);
+           t = new ThreadRunner(getApplicationContext(),arg,timeout);
 
         }
         else{

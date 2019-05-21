@@ -14,12 +14,14 @@ public class ThreadRunner implements Runnable {
     private Map<String, Long> arg;
     private Context context;
     private boolean running;
+    private long timeout;
 
-    public ThreadRunner(Context ctx, Map<String, Long> arg){
+    public ThreadRunner(Context ctx, Map<String, Long> arg, long timeout){
         this.t = new Thread(this);
         this.arg = arg;
         this.context = ctx;
         running = true;
+        this.timeout = timeout;
         this.t.start();
     }
 
@@ -35,7 +37,7 @@ public class ThreadRunner implements Runnable {
         MethodChannel mBackgroundChannel;
         while(running){
             try {
-                this.t.sleep(10000);
+                this.t.sleep(this.timeout);
                 long handle = arg.get("handle");
 
                  sBackgroundFlutterView = new FlutterNativeView(context, true);

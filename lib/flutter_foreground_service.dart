@@ -29,13 +29,16 @@ class FlutterForegroundService {
       String text,
       String subText,
       String ticker,
-      dynamic Function() callback}) {
+        dynamic Function() callback,
+        int seconds
+      }) {
     final args = {
       'title': title,
       'text': text,
       'subText': subText,
       'ticker': ticker,
-      'callback': PluginUtilities.getCallbackHandle(callback).toRawHandle()
+      'callback': PluginUtilities.getCallbackHandle(callback).toRawHandle(),
+      'timeout': seconds
     };
 
     return _channel.invokeMethod('start', args);
