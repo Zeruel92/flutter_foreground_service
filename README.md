@@ -30,6 +30,24 @@ and
 
 ``` <service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service> ```
 
+You need also to modify your MainActivity.java in order to use plugins in background tasks:
+
+```
+public class MainActivity extends FlutterApplication implements PluginRegistry.PluginRegistrantCallback {
+  @Override
+  public void onCreate() {
+    super.onCreate();
+      ForegroundService.setPluginRegistrant(this);
+    //GeneratedPluginRegistrant.registerWith(this);
+  }
+
+    @Override
+    public void registerWith(PluginRegistry pluginRegistry) {
+        GeneratedPluginRegistrant.registerWith(pluginRegistry);
+    }
+}
+```
+
 ## Using
 Before starting a service FlutterForegroundServicePlugin must be initialized via
 
