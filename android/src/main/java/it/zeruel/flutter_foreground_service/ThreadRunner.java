@@ -17,15 +17,17 @@ public class ThreadRunner implements Runnable {
     private boolean running;
     private int timeout;
     private PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
+    private MethodChannel methodChannel;
 
-    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback){
+    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback, MethodChannel backgroundChannel){
         this.t = new Thread(this);
         this.arg = arg;
         this.context = ctx;
         running = true;
         this.timeout = timeout;
-        this.t.start();
         this.pluginRegistrantCallback = pluginRegistrantCallback;
+        this.methodChannel = backgroundChannel;
+        this.t.start();
     }
 
     public void stop(){
@@ -37,25 +39,21 @@ public class ThreadRunner implements Runnable {
         FlutterNativeView sBackgroundFlutterView;
         FlutterRunArguments args;
         FlutterCallbackInformation callbackInfo;
-        MethodChannel mBackgroundChannel;
+        long handle = arg.get("handle");
+
+        sBackgroundFlutterView = new FlutterNativeView(context, true);
+        args = new FlutterRunArguments();
+        callbackInfo = FlutterCallbackInformation.lookupCallbackInformation(handle);
+        args.bundlePath = FlutterMain.findAppBundlePath(context);
+        args.entrypoint = callbackInfo.callbackName;
+        args.libraryPath = callbackInfo.callbackLibraryPath;
+        sBackgroundFlutterView.runFromBundle(args);
+        this.pluginRegistrantCallback.registerWith(sBackgroundFlutterView.getPluginRegistry());
+
         while(running){
             try {
                 this.t.sleep(this.timeout);
-                long handle = arg.get("handle");
-
-                 sBackgroundFlutterView = new FlutterNativeView(context, true);
-                 args = new FlutterRunArguments();
-                callbackInfo = FlutterCallbackInformation.lookupCallbackInformation(handle);
-                args.bundlePath = FlutterMain.findAppBundlePath(context);
-                args.entrypoint = callbackInfo.callbackName;
-                args.libraryPath = callbackInfo.callbackLibraryPath;
-
-                mBackgroundChannel = new MethodChannel(sBackgroundFlutterView,
-                        "flutter_foreground_service_background");
-
-                sBackgroundFlutterView.runFromBundle(args);
-                this.pluginRegistrantCallback.registerWith(sBackgroundFlutterView.getPluginRegistry());
-
+                methodChannel.invokeMethod("trigger",arg);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

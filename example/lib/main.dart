@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
                     subText: 'Sottotesto',
                     ticker: 'Accessibilità',
                     callback: backgroundtask,
-                    seconds: 30
+                    seconds: 10
                 ),
               ),
               RaisedButton(

@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
 
@@ -27,9 +28,14 @@ public class ForegroundService extends Service  {
     private String CHANNEL_ID = "flutter_foreground_service_channel_id";
     private ThreadRunner t;
     private static PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
+    private static MethodChannel backgroundChannel;
 
     public static void setPluginRegistrant(PluginRegistry.PluginRegistrantCallback cb) {
         pluginRegistrantCallback = cb;
+    }
+
+    public static void setMethodChannel(MethodChannel background) {
+        backgroundChannel = background;
     }
 
     private void createNotificationChannel() {
@@ -82,7 +88,7 @@ public class ForegroundService extends Service  {
             arg.put("handle",handle);
             int timeout = bundle.getInt("timeout");
 
-           t = new ThreadRunner(getApplicationContext(),arg,timeout,pluginRegistrantCallback);
+           t = new ThreadRunner(getApplicationContext(),arg,timeout,pluginRegistrantCallback,backgroundChannel);
 
         }
         else{

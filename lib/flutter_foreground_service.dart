@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-const MethodChannel _backgroundchannel =
+const MethodChannel _backgroundChannel =
     const MethodChannel('flutter_foreground_service_background');
 
 class FlutterForegroundService {
@@ -12,7 +12,7 @@ class FlutterForegroundService {
       const MethodChannel('flutter_foreground_service');
 
   static Future<bool> init() async {
-    _backgroundchannel.setMethodCallHandler((MethodCall call) async {
+    _backgroundChannel.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'trigger') {
         WidgetsFlutterBinding.ensureInitialized();
         final dynamic args = call.arguments;

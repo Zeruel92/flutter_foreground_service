@@ -15,6 +15,8 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler {
 
   private final Context context;
   public static  MethodChannel channel;
+  public static MethodChannel background;
+
 
 
   public FlutterForegroundServicePlugin(Context context) {
@@ -24,7 +26,10 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler {
   public static void registerWith(Registrar registrar) {
     FlutterForegroundServicePlugin plugin = new FlutterForegroundServicePlugin(registrar.context());
     channel = new MethodChannel(registrar.messenger(), "flutter_foreground_service");
+    background = new MethodChannel(registrar.messenger(), "flutter_foreground_service_background");
     channel.setMethodCallHandler(plugin);
+
+    ForegroundService.setMethodChannel(background);
   }
 
   @Override
