@@ -6,11 +6,13 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.plugin.common.PluginRegistry;
+import io.flutter.plugin.common.PluginRegistry.*;
+import io.flutter.view.FlutterNativeView;
 
 
 /** FlutterForegroundServicePlugin */
-public class FlutterForegroundServicePlugin implements MethodCallHandler {
+public class FlutterForegroundServicePlugin implements MethodCallHandler, ViewDestroyListener {
   /** Plugin registration. */
 
   private final Context context;
@@ -28,7 +30,7 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler {
     channel = new MethodChannel(registrar.messenger(), "flutter_foreground_service");
     background = new MethodChannel(registrar.messenger(), "flutter_foreground_service_background");
     channel.setMethodCallHandler(plugin);
-
+    registrar.addViewDestroyListener(plugin);
     ForegroundService.setMethodChannel(background);
   }
 
@@ -44,6 +46,7 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler {
         intent.putExtra("subText", (String)call.argument("subText"));
         intent.putExtra("ticker", (String)call.argument("ticker"));
         intent.putExtra("handle", (long) call.argument("callback"));
+        intent.putExtra("init", (long) call.argument("initCallback"));
         intent.putExtra("timeout",((int) call.argument("timeout") * 1000));
         context.startService(intent);
         result.success(null);
@@ -61,4 +64,9 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler {
       }
     }
   }
+
+    @Override
+    public boolean onViewDestroy(FlutterNativeView nativeView) {
+        return ForegroundService.setBackgroundFlutterView(nativeView);
+    }
 }

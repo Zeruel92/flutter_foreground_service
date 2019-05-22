@@ -20,13 +20,18 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
+import io.flutter.view.FlutterCallbackInformation;
+import io.flutter.view.FlutterMain;
+import io.flutter.view.FlutterNativeView;
+import io.flutter.view.FlutterRunArguments;
 
 
 public class ForegroundService extends Service  {
 
     private static final int ONGOING_NOTIFICATION_ID = 1;
+    private static FlutterNativeView sBackgroundFlutterView;
     private String CHANNEL_ID = "flutter_foreground_service_channel_id";
-    private ThreadRunner t;
+    private static ThreadRunner t;
     private static PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
     private static MethodChannel backgroundChannel;
 
@@ -36,6 +41,10 @@ public class ForegroundService extends Service  {
 
     public static void setMethodChannel(MethodChannel background) {
         backgroundChannel = background;
+    }
+
+    public static boolean setBackgroundFlutterView(FlutterNativeView view) {
+        return  t.setBackgroundFlutterView(view);
     }
 
     private void createNotificationChannel() {
@@ -86,9 +95,12 @@ public class ForegroundService extends Service  {
             startForeground(ONGOING_NOTIFICATION_ID, notification);
             final Map<String, Long> arg = new HashMap<String,Long>();
             arg.put("handle",handle);
+            arg.put("init", bundle.getLong("init"));
             int timeout = bundle.getInt("timeout");
 
-           t = new ThreadRunner(getApplicationContext(),arg,timeout,pluginRegistrantCallback,backgroundChannel);
+
+
+           t = new ThreadRunner(getApplicationContext(),arg,timeout,backgroundChannel,pluginRegistrantCallback);
 
         }
         else{
