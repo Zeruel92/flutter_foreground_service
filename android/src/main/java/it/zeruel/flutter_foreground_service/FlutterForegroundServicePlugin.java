@@ -30,6 +30,7 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler, ViewDe
     channel = new MethodChannel(registrar.messenger(), "flutter_foreground_service");
     background = new MethodChannel(registrar.messenger(), "flutter_foreground_service_background");
     channel.setMethodCallHandler(plugin);
+    background.setMethodCallHandler(plugin);
     registrar.addViewDestroyListener(plugin);
     ForegroundService.setMethodChannel(background);
   }
@@ -58,6 +59,10 @@ public class FlutterForegroundServicePlugin implements MethodCallHandler, ViewDe
         context.stopService(intent);
         break;
       }
+        case "initComplete":{
+            ThreadRunner.onInitComplete();
+            break;
+        }
       default: {
         result.notImplemented();
         break;

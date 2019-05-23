@@ -4,19 +4,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
-
-
-
 void init() {
-  print('creo il background channel');
   const MethodChannel _backgroundChannel =
   const MethodChannel('flutter_foreground_service_background');
   WidgetsFlutterBinding.ensureInitialized();
   _backgroundChannel
       .setMethodCallHandler((MethodCall call) async {
+    WidgetsFlutterBinding.ensureInitialized();
     if (call.method == 'trigger') {
-      print('bb');
       final dynamic args = call.arguments;
       final CallbackHandle handle =
           CallbackHandle.fromRawHandle(args['handle']);
@@ -24,7 +19,7 @@ void init() {
       closure();
     }
   });
-
+  _backgroundChannel.invokeMethod("initComplete");
 }
 
 class FlutterForegroundService {

@@ -17,19 +17,17 @@ public class ThreadRunner implements Runnable {
 
     private FlutterNativeView sBackgroundFlutterView;
     private final PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
-    private Thread t;
+    private static Thread t;
     private Map<String, Long> arg;
     private boolean running;
     private int timeout;
-    private MethodChannel methodChannel;
-    private Context ctx;
 
-    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout, MethodChannel backgroundChannel, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback){
+    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback){
         this.t = new Thread(this);
         this.arg = arg;
         running = true;
         this.timeout = timeout;
-        this.methodChannel = backgroundChannel;
+
         this.pluginRegistrantCallback = pluginRegistrantCallback;
 
         FlutterMain.ensureInitializationComplete(ctx, null);
@@ -45,8 +43,10 @@ public class ThreadRunner implements Runnable {
         args.libraryPath = callbackInfo.callbackLibraryPath;
         sBackgroundFlutterView.runFromBundle(args);
         this.pluginRegistrantCallback.registerWith(sBackgroundFlutterView.getPluginRegistry());
+    }
 
-        this.t.start();
+    public static void onInitComplete(){
+        t.start();
     }
 
     public void stop(){
@@ -57,9 +57,8 @@ public class ThreadRunner implements Runnable {
     public void run() {
         while(running){
             try {
-                Log.d("a","a");
                 this.t.sleep(this.timeout);
-                methodChannel.invokeMethod("trigger",arg);
+                ForegroundService.backgroundChannel.invokeMethod("trigger",arg);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

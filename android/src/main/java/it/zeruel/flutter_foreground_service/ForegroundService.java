@@ -20,20 +20,17 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.view.FlutterCallbackInformation;
-import io.flutter.view.FlutterMain;
 import io.flutter.view.FlutterNativeView;
-import io.flutter.view.FlutterRunArguments;
+
 
 
 public class ForegroundService extends Service  {
 
     private static final int ONGOING_NOTIFICATION_ID = 1;
-    private static FlutterNativeView sBackgroundFlutterView;
     private String CHANNEL_ID = "flutter_foreground_service_channel_id";
     private static ThreadRunner t;
     private static PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
-    private static MethodChannel backgroundChannel;
+    public static MethodChannel backgroundChannel;
 
     public static void setPluginRegistrant(PluginRegistry.PluginRegistrantCallback cb) {
         pluginRegistrantCallback = cb;
@@ -98,9 +95,9 @@ public class ForegroundService extends Service  {
             arg.put("init", bundle.getLong("init"));
             int timeout = bundle.getInt("timeout");
 
+            Log.d("fs","avvio thread");
 
-
-           t = new ThreadRunner(getApplicationContext(),arg,timeout,backgroundChannel,pluginRegistrantCallback);
+           t = new ThreadRunner(getApplicationContext(),arg,timeout,pluginRegistrantCallback);
 
         }
         else{
