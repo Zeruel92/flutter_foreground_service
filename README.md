@@ -57,15 +57,9 @@ and set on AndroidManifest.xml
 ```
 <application
         android:name=".Application"
-        ```
+```
+
 ## Using
-Before starting a service FlutterForegroundServicePlugin must be initialized via
-
-```
-FlutterForegroundService.init();
-```
-
-in your initState function
 
 ### Starting a foreground service
 

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="99fdbbad-bd7e-406d-8603-154019ae3ea6" name="Default Changelist" comment="Fix background handling, now work °L°">
+    <list default="true" id="99fdbbad-bd7e-406d-8603-154019ae3ea6" name="Default Changelist" comment="Fix background channel °L°">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/FlutterForegroundServicePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/FlutterForegroundServicePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/ForegroundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/ForegroundService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/ThreadRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/ThreadRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/flutter_foreground_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_foreground_service.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,14 +16,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/flutter_foreground_service.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-90">
+            <state relative-caret-position="-210">
               <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="495">
+              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
             </state>
           </provider>
         </entry>
@@ -91,7 +96,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -104,6 +108,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -161,14 +166,20 @@
       <option name="project" value="LOCAL" />
       <updated>1558519018242</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fix background channel °L°">
+      <created>1558600905476</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1558600905476</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="701" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49912435" visible="true" weight="0.22809668" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49912435" visible="true" weight="0.23111783" />
       <window_info id="Structure" order="1" sideWeight="0.50087565" side_tool="true" weight="0.29229608" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -206,7 +217,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updated gitignore" />
     <MESSAGE value="Fix background handling, now only a isolate is started&#10;and methodchannel works as intended" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix background handling, now only a isolate is started&#10;and methodchannel works as intended" />
+    <MESSAGE value="Fix background channel °L°" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix background channel °L°" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/android/src/main/java/it/zeruel/flutter_foreground_service/FlutterForegroundServicePlugin.java">
@@ -267,13 +279,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="89" selection-start-line="89" selection-end-line="89" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -290,7 +295,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_foreground_service.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-90">
+        <state relative-caret-position="-210">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
@@ -309,6 +314,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
         </state>
       </provider>
     </entry>
