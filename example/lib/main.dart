@@ -3,9 +3,7 @@ import 'package:flutter_foreground_service/flutter_foreground_service.dart';
 
 void main() => runApp(MyApp());
 
-
 void backgroundtask() => print('This run in background ${DateTime.now()}');
-
 
 class MyApp extends StatefulWidget {
   @override
@@ -16,7 +14,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    FlutterForegroundService.init();
   }
 
   @override
@@ -37,8 +34,7 @@ class _MyAppState extends State<MyApp> {
                     subText: 'Sottotesto',
                     ticker: 'Accessibilità',
                     callback: backgroundtask,
-                    seconds: 10
-                ),
+                    seconds: 10),
               ),
               RaisedButton(
                 child: Text('Stop'),
