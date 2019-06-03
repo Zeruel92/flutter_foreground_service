@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -86,7 +87,6 @@ public class ForegroundService extends Service  {
                             .setContentText(bundle.getString("text"))
                             .setSubText(bundle.getString("subText"))
                             .setTicker(bundle.getString("ticker"))
-                            .setSmallIcon(android.R.drawable.ic_notification_overlay)
                             .setContentIntent(pendingIntent)
                             .build();
             startForeground(ONGOING_NOTIFICATION_ID, notification);
