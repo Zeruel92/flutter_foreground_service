@@ -2,6 +2,8 @@ package it.zeruel.flutter_foreground_service;
 
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import java.util.Map;
@@ -18,13 +20,14 @@ public class ThreadRunner implements Runnable {
     private FlutterNativeView sBackgroundFlutterView;
     private final PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback;
     private static Thread t;
-    private Map<String, Long> arg;
+    private final Map<String, Long> arg;
     private boolean running;
     private int timeout;
+    private Handler handler;
 
-    public ThreadRunner(Context ctx, Map<String, Long> arg, int timeout, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback){
+    public ThreadRunner(Context ctx, Map<String, Long> arg1, int timeout, PluginRegistry.PluginRegistrantCallback pluginRegistrantCallback){
         this.t = new Thread(this);
-        this.arg = arg;
+        this.arg = arg1;
         running = true;
         this.timeout = timeout;
 
@@ -33,8 +36,8 @@ public class ThreadRunner implements Runnable {
         FlutterMain.ensureInitializationComplete(ctx, null);
         FlutterRunArguments args;
         FlutterCallbackInformation callbackInfo;
-        long handle = arg.get("handle");
-        long init = arg.get("init");
+        long handle = arg1.get("handle");
+        long init = arg1.get("init");
         sBackgroundFlutterView = new FlutterNativeView(ctx, true);
         args = new FlutterRunArguments();
         callbackInfo = FlutterCallbackInformation.lookupCallbackInformation(init);
@@ -43,6 +46,15 @@ public class ThreadRunner implements Runnable {
         args.libraryPath = callbackInfo.callbackLibraryPath;
         sBackgroundFlutterView.runFromBundle(args);
         this.pluginRegistrantCallback.registerWith(sBackgroundFlutterView.getPluginRegistry());
+
+        //Fix Issue #2 from weiyinqing
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                //Log.e("this is hander message",msg.what+"_____________________________");
+            ForegroundService.backgroundChannel.invokeMethod("trigger",arg);
+            }
+        };
     }
 
     public static void onInitComplete(){
@@ -50,7 +62,14 @@ public class ThreadRunner implements Runnable {
     }
 
     public void stop(){
+        Log.i("ThreadRunner","stopping thread");
         running = false;
+        sBackgroundFlutterView.destroy();
+        try{
+            this.t.interrupt();
+        }catch(Exception ex){
+            Log.d("ThreadRunner","Thread Interrupted");
+        }
     }
 
     @Override
@@ -58,9 +77,12 @@ public class ThreadRunner implements Runnable {
         while(running){
             try {
                 this.t.sleep(this.timeout);
-                ForegroundService.backgroundChannel.invokeMethod("trigger",arg);
+                //ForegroundService.backgroundChannel.invokeMethod("trigger",arg);
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Log.d("ThreadRunner","Thread Interrupted");
             }
         }
     }

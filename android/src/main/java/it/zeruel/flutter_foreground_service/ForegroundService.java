@@ -100,18 +100,14 @@ public class ForegroundService extends Service  {
            t = new ThreadRunner(getApplicationContext(),arg,timeout,pluginRegistrantCallback);
 
         }
-        else{
-            t.stop();
-            stopSelf();
-            stopForeground(true);
-        }
-
-
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
+        t.stop();
+        stopSelf();
+        stopForeground(true);
         super.onDestroy();
     }
 
