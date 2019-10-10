@@ -8,7 +8,7 @@ This is a draft
 
 add in pubspec.yaml
 
-```
+```yaml
     flutter_foreground_service:
         git:
             url: https://github.com/pspgt/flutter_foreground_service.git
@@ -16,7 +16,7 @@ add in pubspec.yaml
 ```
 and import
 
-```
+```java
 import 'package:flutter_foreground_service/flutter_foreground_service.dart';
 ```
 
@@ -24,15 +24,19 @@ import 'package:flutter_foreground_service/flutter_foreground_service.dart';
 
 In order to use this plugin add to your android manifest
 
-``` <uses-permission android:name="android.permission.FOREGROUND_SERVICE"></uses-permission> ```
+```xml
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE"></uses-permission>
+```
 
 and
 
-``` <service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service> ```
+```xml
+<service android:name="it.zeruel.flutter_foreground_service.ForegroundService"></service>
+```
 
 You need also to create Application.java in order to use plugins in background tasks:
 
-```
+```java
 import io.flutter.app.FlutterApplication;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.GeneratedPluginRegistrant;
@@ -54,7 +58,7 @@ public class Application extends FlutterApplication implements PluginRegistry.Pl
 
 and set on AndroidManifest.xml
 
-```
+```xml
 <application
         android:name=".Application"
 ```
@@ -63,7 +67,7 @@ and set on AndroidManifest.xml
 
 ### Starting a foreground service
 
-```
+```java
 FlutterForegroundService.start(
                     title: 'Titolo',
                     text: 'Testo Notifica',
@@ -78,6 +82,6 @@ backgroundtask must be a global void function
 
 ### Stopping a foreground service
 
-```
+```java
 FlutterForegroundService.stop()
 ```
